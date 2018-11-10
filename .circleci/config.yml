@@ -26,5 +26,6 @@ jobs:
           name: Re-route live Domain to latest
           command: |
                 # Send "real" url to new version
-                cf create-route development cfapps.io -n exchange-rates-task1
+                cf delete exchange-rates-task1 -f
+                cf push exchange-rates-task1 -b python_buildpack
                 cf map-route exchange-rates-task1 cfapps.io -n exchange-rates-task1
