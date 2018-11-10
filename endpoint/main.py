@@ -1,17 +1,24 @@
 from flask import Flask, jsonify
 import requests
 import json
+from endpoint.exchange_dictionary import ExchangeDictionary
 
 app = Flask(__name__)
+
+# clear Map in every one hour
+ExchangeDictionary.clear_exchange_rate_map_in_every_hour()
 
 
 @app.route("/api/v1/<string:from_currency>/<string:to_currency>/<string:amount>", methods=["GET"])
 def get_me_exchange_value(from_currency, to_currency, amount):
-    data = json.loads(requests.get(construct_url(from_currency, to_currency)).text)
     key = from_currency + '_' + to_currency
-    current_rate = (data[key])['val']
+    if ExchangeDictionary.exchange_rate_map.get(key) is None:
+        data = json.loads(requests.get(construct_url(from_currency, to_currency)).text)
+        current_rate = (data[key])['val']
+        ExchangeDictionary.exchange_rate_map[key] = current_rate
 
-    return jsonify(response_generator(from_currency, to_currency, amount, current_rate)), 200
+    return jsonify(
+        response_generator(from_currency, to_currency, amount, ExchangeDictionary.exchange_rate_map.get(key))), 200
 
 
 def response_generator(from_currency, to_currency, from_amount, exchange_rate):
