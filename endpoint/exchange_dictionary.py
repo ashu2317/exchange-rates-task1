@@ -3,7 +3,7 @@ import threading
 
 class ExchangeDictionary:
     exchange_rate_map = {}
-    interval = 5
+    interval = 3600
 
     @staticmethod
     def clear_exchange_rate_map_in_every_hour():
