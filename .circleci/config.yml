@@ -27,5 +27,5 @@ jobs:
           command: |
                 # Send "real" url to new version
                 cf delete exchange-rates-task1 -f
-                cf push exchange-rates-task1 -b python_buildpack
+                cf push exchange-rates-task1 -b python_buildpack -c "python endpoint/main.py"
                 cf map-route exchange-rates-task1 cfapps.io -n exchange-rates-task1
