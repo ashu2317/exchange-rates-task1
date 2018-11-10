@@ -12,3 +12,18 @@ jobs:
           command: |  # use pipenv to install dependencies
             sudo pip install pipenv
             pipenv install
+
+      - run:
+          name: Setup CF CLI
+          command: |
+            curl -v -L -o cf-cli_amd64.deb 'https://cli.run.pivotal.io/stable?release=debian64&source=github'
+            sudo dpkg -i cf-cli_amd64.deb
+            cf -v
+            cf api https://api.run.pivotal.io  # alternately target your private Cloud Foundry deployment
+            cf auth agate.ashu1@gmail.com welcome12#
+            cf target -o ashu1-org -s development
+          - run:
+              name: Re-route live Domain to latest
+              command: |
+                # Send "real" url to new version
+                cf map-route exchange-rates-task1 cfapps.io -n http
