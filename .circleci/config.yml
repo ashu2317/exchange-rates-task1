@@ -1,7 +1,9 @@
 version: 2
 jobs:
   build:
-    # ...
+    working_directory: ~/circleci-demo-python-django
+      docker:
+      - image: circleci/python:3.7.1
     steps:
       - checkout  # checkout source code to working directory
       - run:
