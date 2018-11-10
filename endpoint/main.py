@@ -2,9 +2,10 @@ from flask import Flask, jsonify
 import requests
 import json
 from endpoint.exchange_dictionary import ExchangeDictionary
+import os
 
 app = Flask(__name__)
-
+port = int(os.getenv("VCAP_APP_PORT"))
 # clear Map in every one hour
 ExchangeDictionary.clear_exchange_rate_map_in_every_hour()
 
@@ -36,4 +37,4 @@ def construct_url(from_currency, to_currency):
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(host="0.0.0.0", port=port)
