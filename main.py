@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 import requests
 import json
-from endpoint.exchange_dictionary import ExchangeDictionary
+from exchange_dictionary import ExchangeDictionary
 import os
 
 app = Flask(__name__)
