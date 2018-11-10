@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/circleci-demo-python-django
     docker:
-       - image: circleci/python:3.7.1
+       - image: circleci/python:3.6.7
          environment:
            PIPENV_VENV_IN_PROJECT: true
     steps:
