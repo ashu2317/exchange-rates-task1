@@ -1,5 +1,5 @@
 # My Exchange App
-This is created in response to code challange 
+This is created in response to coding challange 
 https://github.com/imamchishty/exchange-rates-challenge/wiki/Task-1
 #### Tech
 
