@@ -5,7 +5,8 @@ from exchange_dictionary import ExchangeDictionary
 import os
 
 app = Flask(__name__)
-port = int(os.getenv("VCAP_APP_PORT"))
+port = int(os.getenv("VCAP_APP_PORT") if os.getenv("VCAP_APP_PORT") is not None else 5000)
+host = "0.0.0.0" if os.getenv("VCAP_APP_PORT") is not None else "127.0.0.1"
 # clear Map in every one hour
 ExchangeDictionary.clear_exchange_rate_map_in_every_hour()
 
@@ -37,4 +38,4 @@ def construct_url(from_currency, to_currency):
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=port)
+        app.run(host=host, port=port)
