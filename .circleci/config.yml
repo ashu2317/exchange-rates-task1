@@ -1,0 +1,10 @@
+version: 2
+jobs:
+  build:
+    # ...
+    steps:
+      - checkout  # checkout source code to working directory
+      - run:
+          command: |  # use pipenv to install dependencies
+            sudo pip install pipenv
+            pipenv install
