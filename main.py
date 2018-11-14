@@ -2,11 +2,9 @@ from flask import Flask, jsonify
 import requests
 import json
 from exchange_dictionary import ExchangeDictionary
-import os
 
 app = Flask(__name__)
-port = int(os.getenv("VCAP_APP_PORT") if os.getenv("VCAP_APP_PORT") is not None else 5000)
-host = "0.0.0.0" if os.getenv("VCAP_APP_PORT") is not None else "127.0.0.1"
+
 # clear Map in every one hour
 ExchangeDictionary.clear_exchange_rate_map_in_every_hour()
 
@@ -19,6 +17,7 @@ def get_me_exchange_value(from_currency, to_currency, amount):
         current_rate = (data[key])['val']
         ExchangeDictionary.exchange_rate_map[key] = current_rate
 
+    print("API is HIT")
     return jsonify(
         response_generator(from_currency, to_currency, amount, ExchangeDictionary.exchange_rate_map.get(key))), 200
 
@@ -38,4 +37,4 @@ def construct_url(from_currency, to_currency):
 
 
 if __name__ == '__main__':
-        app.run(host=host, port=port)
+        app.run(debug=False)
